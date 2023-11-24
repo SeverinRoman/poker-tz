@@ -31,7 +31,6 @@ public class Projectile : MonoBehaviour, ISlowMotion
     private float startGravityScale;
     private float startDrag;
     private float startMass;
-
     //#endregion
 
 
@@ -52,14 +51,15 @@ public class Projectile : MonoBehaviour, ISlowMotion
     public void AddForce(Vector2 force)
     {
         rigidbody.AddRelativeForce(force);
+
     }
 
     public void ChangeSpeed(float speed)
     {
-        rigidbody.velocity *= speed;
-        rigidbody.gravityScale *= speed / 10f;
-        rigidbody.drag *= speed;
-        rigidbody.mass *= speed;
+        rigidbody.velocity /= speed;
+        rigidbody.gravityScale /= speed * 10f;
+        rigidbody.drag /= speed;
+        rigidbody.mass /= speed;
     }
 
     public void ReturnNormalSpeed(float speed)

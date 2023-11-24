@@ -12,7 +12,7 @@ public class ChangeSpeedZone : MonoBehaviour
 {
     //#region editors fields and properties
 
-    [SerializeField][Range(0, 1)] private float slow = 0.1f;
+    [SerializeField] private ChangeSpeedZoneScriptableObject changeSpeedZoneScriptableObject;
 
     //#endregion
 
@@ -40,7 +40,7 @@ public class ChangeSpeedZone : MonoBehaviour
     {
         if (collider2D.gameObject.TryGetComponent<ISlowMotion>(out ISlowMotion slowMotion))
         {
-            slowMotion.ChangeSpeed(slow);
+            slowMotion.ChangeSpeed(changeSpeedZoneScriptableObject.slowMultiplayer);
         }
     }
 
@@ -48,7 +48,7 @@ public class ChangeSpeedZone : MonoBehaviour
     {
         if (collider2D.gameObject.TryGetComponent<ISlowMotion>(out ISlowMotion slowMotion))
         {
-            slowMotion.ReturnNormalSpeed(slow * 100f);
+            slowMotion.ReturnNormalSpeed(changeSpeedZoneScriptableObject.slowMultiplayer);
         }
     }
 

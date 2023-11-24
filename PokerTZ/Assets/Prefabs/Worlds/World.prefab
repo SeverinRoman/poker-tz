@@ -115,12 +115,12 @@ PrefabInstance:
     - target: {fileID: 273316736998683980, guid: a0b8d4a2ed479bd419f782dabafc238f,
         type: 3}
       propertyPath: slow
-      value: 0.1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4511692541941606533, guid: a0b8d4a2ed479bd419f782dabafc238f,
         type: 3}
       propertyPath: m_Name
-      value: SlowmoZone
+      value: ChangeSpeedZone
       objectReference: {fileID: 0}
     - target: {fileID: 4511692541941606533, guid: a0b8d4a2ed479bd419f782dabafc238f,
         type: 3}
