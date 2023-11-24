@@ -6,19 +6,28 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using UnityEngine.UI;
+using UnityEngine.Pool;
 //#endregion
 
 public class Projectile : MonoBehaviour
 {
     //#region editors fields and properties
+
+    [SerializeField] private ProjectileScriptableObject projectileScriptableObject;
+
     //#endregion
 
     //#region public fields and properties
+    public IObjectPool<GameObject> Pool { set { pool = value; } }
+
     //#endregion
 
     //#region private fields and properties
 
     private new Rigidbody2D rigidbody;
+    private IObjectPool<GameObject> pool;
+
+    private Coroutine lifeCoroutine;
 
     //#endregion
 
@@ -28,21 +37,6 @@ public class Projectile : MonoBehaviour
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-    }
-
-    void OnEnable()
-    {
-
-    }
-
-    void OnDisable()
-    {
-
-    }
-
-    void Start()
-    {
-
     }
 
     //#endregion
@@ -57,6 +51,11 @@ public class Projectile : MonoBehaviour
     //#endregion
 
     //#region private methods
+
+    public void StartTimeLife()
+    {
+        lifeCoroutine = StartCoroutine(CodeHelper.Helper.DelayAction(() => pool.Release(gameObject), projectileScriptableObject.timeLife));
+    }
 
     //#endregion
 

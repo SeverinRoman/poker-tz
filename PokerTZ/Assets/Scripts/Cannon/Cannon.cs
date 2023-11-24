@@ -12,25 +12,11 @@ using UnityEngine.Pool;
 public class Cannon : MonoBehaviour
 {
     //#region editors fields and properties
-    [SerializeField] private float force;
-    [SerializeField] private float timeShot;
+    [SerializeField] CannonConfigScriptableObject cannonConfigScriptableObject;
     [SerializeField] private Transform muzzle;
-    [SerializeField] private GameObject projectile;
-
-    [SerializeField][BoxGroup("Pool")] private PoolType poolType;
-    [SerializeField][BoxGroup("Pool")] private int maxPoolSize = 10;
-
     //#endregion
 
     //#region public fields and properties
-
-
-
-    private enum PoolType
-    {
-        Stack,
-        LinkedList
-    }
 
     public IObjectPool<GameObject> Pool
     {
@@ -38,10 +24,10 @@ public class Cannon : MonoBehaviour
         {
             if (pool == null)
             {
-                if (poolType == PoolType.Stack)
-                    pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, true, 10, maxPoolSize);
+                if (cannonConfigScriptableObject.poolType == PoolType.Stack)
+                    pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, true, 10, cannonConfigScriptableObject.maxPoolSize);
                 else
-                    pool = new LinkedPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, true, maxPoolSize);
+                    pool = new LinkedPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, true, cannonConfigScriptableObject.maxPoolSize);
             }
             return pool;
         }
@@ -64,7 +50,7 @@ public class Cannon : MonoBehaviour
 
     void Start()
     {
-        shotCoroutine = StartCoroutine(CodeHelper.Helper.ForeverDelayAction(Shot, timeShot));
+        shotCoroutine = StartCoroutine(CodeHelper.Helper.ForeverDelayAction(Shot, cannonConfigScriptableObject.timeShot));
         Shot();
     }
 
@@ -75,10 +61,11 @@ public class Cannon : MonoBehaviour
     public void Shot()
     {
         GameObject gameObject = Pool.Get();
+
         Projectile projectile = gameObject.GetComponent<Projectile>();
 
         Vector2 direction = (muzzle.position - transform.position).normalized;
-        Vector2 impulse = direction * force;
+        Vector2 impulse = direction * cannonConfigScriptableObject.force;
         projectile.AddForce(impulse);
     }
 
@@ -88,16 +75,27 @@ public class Cannon : MonoBehaviour
 
     private GameObject CreatePooledItem()
     {
-        GameObject newGameObject = Instantiate(projectile);
+        GameObject newGameObject = Instantiate(cannonConfigScriptableObject.projectile);
         newGameObject.transform.SetParent(muzzle);
-        newGameObject.transform.localScale = projectile.transform.localScale;
-        newGameObject.transform.localPosition = projectile.transform.localPosition;
+        newGameObject.transform.localPosition = cannonConfigScriptableObject.projectile.transform.localPosition;
+        newGameObject.transform.localScale = cannonConfigScriptableObject.projectile.transform.localScale;
+
+        Projectile projectile = newGameObject.GetComponent<Projectile>();
+        projectile.Pool = pool;
+        projectile.StartTimeLife();
+
+
         return newGameObject;
     }
 
     void OnTakeFromPool(GameObject gameObject)
     {
+        gameObject.transform.localPosition = cannonConfigScriptableObject.projectile.transform.localPosition;
         gameObject.SetActive(true);
+        Projectile projectile = gameObject.GetComponent<Projectile>();
+
+        projectile.StartTimeLife();
+
     }
 
     private void OnReturnedToPool(GameObject gameObject)
