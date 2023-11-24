@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StandartCannonSettings
   m_EditorClassIdentifier: 
   force: 1000
-  timeShot: 1
+  timeShot: 2
   projectile: {fileID: 921226801396678585, guid: e1d600c133239194c878250971183b46,
     type: 3}
   poolType: 0

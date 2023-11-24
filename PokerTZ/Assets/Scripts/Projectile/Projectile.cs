@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.Pool;
 //#endregion
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, ISlowMotion
 {
     //#region editors fields and properties
 
@@ -26,8 +26,11 @@ public class Projectile : MonoBehaviour
 
     private new Rigidbody2D rigidbody;
     private IObjectPool<GameObject> pool;
-
     private Coroutine lifeCoroutine;
+
+    private float startGravityScale;
+    private float startDrag;
+    private float startMass;
 
     //#endregion
 
@@ -37,6 +40,9 @@ public class Projectile : MonoBehaviour
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        startGravityScale = rigidbody.gravityScale;
+        startDrag = rigidbody.drag;
+        startMass = rigidbody.mass;
     }
 
     //#endregion
@@ -45,13 +51,33 @@ public class Projectile : MonoBehaviour
 
     public void AddForce(Vector2 force)
     {
-        rigidbody.AddForce(force);
+        rigidbody.AddRelativeForce(force);
+    }
+
+    public void ChangeSpeed(float speed)
+    {
+        rigidbody.velocity *= speed;
+        rigidbody.gravityScale *= speed / 10f;
+        rigidbody.drag *= speed;
+        rigidbody.mass *= speed;
+    }
+
+    public void ReturnNormalSpeed(float speed)
+    {
+        rigidbody.velocity *= speed;
+        SetStartPhysics2DSettings();
+    }
+
+    public void SetStartPhysics2DSettings()
+    {
+        rigidbody.gravityScale = 1f;
+        rigidbody.drag = startDrag;
+        rigidbody.mass = startMass;
     }
 
     //#endregion
 
     //#region private methods
-
     public void StartTimeLife()
     {
         lifeCoroutine = StartCoroutine(CodeHelper.Helper.DelayAction(() => pool.Release(gameObject), projectileScriptableObject.timeLife));

@@ -79,6 +79,7 @@ public class Cannon : MonoBehaviour
         newGameObject.transform.SetParent(muzzle);
         newGameObject.transform.localPosition = cannonConfigScriptableObject.projectile.transform.localPosition;
         newGameObject.transform.localScale = cannonConfigScriptableObject.projectile.transform.localScale;
+        newGameObject.transform.rotation = cannonConfigScriptableObject.projectile.transform.rotation;
 
         Projectile projectile = newGameObject.GetComponent<Projectile>();
         projectile.Pool = pool;
@@ -91,6 +92,8 @@ public class Cannon : MonoBehaviour
     void OnTakeFromPool(GameObject gameObject)
     {
         gameObject.transform.localPosition = cannonConfigScriptableObject.projectile.transform.localPosition;
+        gameObject.transform.localScale = cannonConfigScriptableObject.projectile.transform.localScale;
+        gameObject.transform.rotation = cannonConfigScriptableObject.projectile.transform.rotation;
         gameObject.SetActive(true);
         Projectile projectile = gameObject.GetComponent<Projectile>();
 

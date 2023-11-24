@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d9f7d536b72c0489e8c4493697f16c, type: 3}
   m_Name: StandartProjectileSettings
   m_EditorClassIdentifier: 
-  timeLife: 1
+  timeLife: 5

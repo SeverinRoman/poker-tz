@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 26119824881084545}
   - component: {fileID: 1583387433621712847}
+  - component: {fileID: 273316736998683980}
   m_Layer: 0
-  m_Name: SlowmoZone
+  m_Name: ChangeSpeedZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,6 +50,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &273316736998683980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4511692541941606533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b006790f6ead384aadd163274154db4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8458852316477086029
 GameObject:
   m_ObjectHideFlags: 0
