@@ -22,8 +22,17 @@ namespace CodeHelper
 
         public static IEnumerator RegularDelayAction(Action action, float delay, int iteration)
         {
-
             for (int i = 1; i <= iteration; i++)
+            {
+                yield return new WaitForSeconds(delay);
+                action();
+            }
+        }
+
+
+        public static IEnumerator ForeverDelayAction(Action action, float delay)
+        {
+            while (true)
             {
                 yield return new WaitForSeconds(delay);
                 action();

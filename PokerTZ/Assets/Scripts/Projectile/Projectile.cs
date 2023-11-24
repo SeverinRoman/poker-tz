@@ -17,6 +17,9 @@ public class Projectile : MonoBehaviour
     //#endregion
 
     //#region private fields and properties
+
+    private new Rigidbody2D rigidbody;
+
     //#endregion
 
 
@@ -24,12 +27,12 @@ public class Projectile : MonoBehaviour
 
     void Awake()
     {
-
+        rigidbody = GetComponent<Rigidbody2D>();
     }
 
     void OnEnable()
     {
-        
+
     }
 
     void OnDisable()
@@ -46,10 +49,15 @@ public class Projectile : MonoBehaviour
 
     //#region public methods
 
+    public void AddForce(Vector2 force)
+    {
+        rigidbody.AddForce(force);
+    }
+
     //#endregion
 
     //#region private methods
-    
+
     //#endregion
 
     //#region event handlers
