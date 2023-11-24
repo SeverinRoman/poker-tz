@@ -78,13 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883b009ac0b53724cbd7cccbd47bc9a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
-  timeShot: 1
+  cannonConfigScriptableObject: {fileID: 11400000, guid: ca5fd90c4dd97724daf481a23bee0ea8,
+    type: 2}
   muzzle: {fileID: 8461294016420589455}
-  projectile: {fileID: 921226801396678585, guid: e1d600c133239194c878250971183b46,
-    type: 3}
-  poolType: 0
-  maxPoolSize: 10
 --- !u!1 &7007646810055713612
 GameObject:
   m_ObjectHideFlags: 0
